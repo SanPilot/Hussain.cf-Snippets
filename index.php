@@ -1,4 +1,6 @@
 <?php
+print_r[$_GET];
+exit();
 if(is_file("files/".$_GET['f']) && isset($_GET['f']) && $_GET['f'] != "") {
 	$filename = htmlspecialchars($_GET['f']);
 	$modate = date("F j, Y", filemtime("files/".$_GET['f'])) . " at " . date("g:i a", filemtime("files/".$_GET['f']));
