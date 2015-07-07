@@ -1,2 +1,2 @@
 RewriteEngine On
-RewriteRule ^.*/snippets/(.*)$ /snippets/?f=$1 [L]
+RewriteRule ^snippets/([^/\.]+)$ /snippets/?f=$1 [L]
