@@ -10,6 +10,11 @@ if(is_file("files/".$_GET['f']) && isset($_GET['f']) && $_GET['f'] != "") {
 	$filename = "<i>New Snippet</i>";
 	$new = true;
 }
+if($new) {
+	$fcontent = "// Paste you code here";
+} else {
+	$fcontent = nl2br(file_get_contents("files/".$_GET['f']));
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -32,11 +37,13 @@ if(!$new) {
 			}
 			#area {
 				outline: none;
+				visibility: hidden;
 			}
 			#header {
 				display: flex;
 				align-items: center;
 				font-family: Permian Serif;
+				margin-left: 8px;
 			}
 			#headerlarge {
 				font-size: 25px;
@@ -46,7 +53,6 @@ if(!$new) {
 			#headersmall {
 				font-size: 20px;
 				color: #aaaaaa;
-				<?php if($new) echo "display: none;"; ?>
 			}
 			<?php include "../scripts/php/clippings/fonts/PermianSerif.php" ?>
 		</style>
@@ -54,18 +60,26 @@ if(!$new) {
 	</head>
 	<body>
 		<div id="header">
-			<span id="headerlarge"><?=$filename ?></span><span id="headersmall">&nbsp;&#x2013;&nbsp; saved <?=$modate ?></span>
+			<span id="headerlarge"><?=$filename ?></span><span id="headersmall">&nbsp;&#x2013;&nbsp; <span id="ctext">loading...</span></span>
 		</div>
 		<div id="area" class="hljs" contenteditable="<?php if($new) {echo "true";} else {echo "false";} ?>">
-			// Paste your code here!
+			<?=$fcontent ?>
 		</div>
 		<script type="text/javascript" src="highlightjs/highlight.pack.js"></script>
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 		<script type="text/javascript">
 			var area = document.getElementById("area");
-			window.onload = function() {
-				hljs.highlightBlock(area);
-			};
+			var newf = <? if($new) {echo "true";} else {echo "false";} ?>;
+				window.onload = function() {
+					hljs.configure({useBR: true});
+					hljs.highlightBlock(area);
+					if(newf) {
+						document.getElementById("headersmall").innerHTML = "";
+					} else {
+						document.getElementById("ctext").innerHTML = "saved <?=$modate ?>";
+					}
+					area.style.visibility = "visible";
+				};
 			area.onkeyup = function() {
 				hljs.highlightBlock(area);
 			};
