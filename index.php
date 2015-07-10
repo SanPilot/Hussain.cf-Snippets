@@ -13,7 +13,7 @@ if(is_file("files/".$_GET['f']) && isset($_GET['f']) && $_GET['f'] != "") {
 if($new) {
 	$fcontent = "// Paste you code here";
 } else {
-	$fcontent = nl2br(file_get_contents("files/".$_GET['f']));
+	$fcontent = nl2br(file_get_contents("files/".$_GET['f']), false);
 }
 ?>
 <!DOCTYPE html>
