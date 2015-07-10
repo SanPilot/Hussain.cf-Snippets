@@ -1,3 +1,2 @@
 RewriteEngine On
-RewriteBase /
-RewriteRule ^(snippets)/(.*)$ snippets/index.php?f=$1 [L]
+RewriteRule ^(snippets)/(.*)$ snippets/index.php?f=$2 [L]
