@@ -69,7 +69,7 @@ if(!$new) {
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 		<script type="text/javascript">
 			var area = document.getElementById("area");
-			var newf = <? if($new) {echo "true";} else {echo "false";} ?>;
+			var newf = <?php if($new) {echo "true";} else {echo "false";} ?>;
 				window.onload = function() {
 					hljs.configure({useBR: true});
 					hljs.highlightBlock(area);
