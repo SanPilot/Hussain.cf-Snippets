@@ -5,13 +5,7 @@ if(is_file("files/".$_GET['f']) && isset($_GET['f']) && $_GET['f'] != "") {
 	$lang = preg_match("/.*\.(\w+)$/", $_GET['f'], $res);
 	$lang = $res[1];
 	$file = "files/".$_GET['f'];
-	$linecount = 0;
-	$handle = fopen($file, "r");
-	while(!feof($handle)){
-		$line = fgets($handle);
-		$linecount++;
-	}
-	fclose($handle);
+	$linecount = count(file($file)) + 1;
 } elseif (isset($_GET['f']) && $_GET['f'] != "") {
 	header("status: 404 Not Found");
 	include "../error/index.php";
@@ -19,11 +13,13 @@ if(is_file("files/".$_GET['f']) && isset($_GET['f']) && $_GET['f'] != "") {
 } else {
 	$filename = "<i>New Snippet</i>";
 	$new = true;
+	$linecount = 0;
+	$lang = "";
 }
 if($new) {
-	$fcontent = "// Paste you code here";
+	$fcontent = "// Paste your snippet here";
 } else {
-	$fcontent = nl2br(file_get_contents("files/".$_GET['f']), false);
+	$fcontent = nl2br(file_get_contents($file), false);
 }
 ?>
 <!DOCTYPE html>
@@ -53,7 +49,6 @@ if(!$new) {
 				outline: none;
 				visibility: hidden;
 			}
-
 			#header {
 				display: flex;
 				align-items: center;
@@ -62,6 +57,7 @@ if(!$new) {
 				background-color: #1d1f21;
 				position: fixed;
 				width: 100%;
+				z-index: 999;
 			}
 			#headerlarge {
 				font-size: 25px;
@@ -81,14 +77,24 @@ if(!$new) {
 				font-size: 13px;
 			}
 			#line-numbers {
-				height: 100%;
 				float: left;
 				background-color: #3e4348;
 				color: #ffffff;
-				padding: 79px 18px 10px 18px;
+				padding: 79px 0px 10px 0;
+				width: 40px;
 				font-size: 13px;
 				text-align: center;
 				font-family: monospace;
+				z-index: 20;
+				position: relative;
+			}
+			#line-back {
+				float: left;
+				height: 100%;
+				background-color: #3e4348;
+				width: 40px;
+				position: absolute;
+				z-index: 10;
 			}
 			<?php include "../scripts/php/clippings/fonts/PermianSerif.php" ?>
 		</style>
@@ -101,6 +107,7 @@ if(!$new) {
 			</div>
 			<div id="areacontainer">
 				<div id="line-numbers"></div>
+				<div id="line-back"></div>
 				<pre id="area" class="hljs js" contenteditable="<?php if($new) {echo "true";} else {echo "false";} ?>"><?=$fcontent ?></pre>
 			</div>
 		</div>
@@ -109,8 +116,11 @@ if(!$new) {
 		<script type="text/javascript">
 			var area = document.getElementById("area");
 			var newf = <?php if($new) {echo "true";} else {echo "false";} ?>;
+			var lang = <?=$lang ?>;
 			if(!newf) {
 				var lines = <?=$linecount; ?>;
+				} else {
+					var lines = 0;
 				}
 			var i = 1;
 			window.onload = function() {
