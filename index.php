@@ -1,63 +1,38 @@
 <?php
-if(is_file("files/".$_GET['f']) && isset($_GET['f']) && $_GET['f'] != "") {
-	$filename = htmlspecialchars($_GET['f']);
-	$modate = date("F j, Y", filemtime("files/".$_GET['f'])) . " at " . date("g:i a", filemtime("files/".$_GET['f']));
-	$lang = preg_match("/.*\.(\w+)$/", $_GET['f'], $res);
-	$lang = $res[1];
-	$file = "files/".$_GET['f'];
-	$linecount = count(file($file)) + 1;
-} elseif (isset($_GET['f']) && $_GET['f'] != "") {
-	header("status: 404 Not Found");
-	include "../error/index.php";
-	exit();
+if(isset($_GET['f']) && $_GET['f'] != "") {
+	$filename = json_encode($_GET['f']);
+	$new = "false";
 } else {
-	$filename = "<i>New Snippet</i>";
-	$new = true;
-	$linecount = 0;
-	$lang = "";
-}
-if($new) {
-	$fcontent = "// Paste your snippet here";
-} else {
-	$fcontent = nl2br(file_get_contents($file), false);
+	$filename = "\"\"";
+	$new = "true";
 }
 ?>
 <!DOCTYPE html>
 <html>
 	<head>
 		<title>
-			<?php
-if(!$new) {
-	echo $filename." &#8212; Snippet";
-} else {
-	echo "New Snippet";
-}
-			?>
+			Loading - Snippets
 		</title>
 		<link rel="stylesheet" href="highlightjs/styles/obsidian.css">
 		<style type="text/css">
 			body, html {
 				margin: 0px;
 				padding: 0px;
-				height: 100%;
 				background-color: #282b2e;
-			}
-			#wrapper {
-				height: 100%;
 			}
 			#area {
 				outline: none;
-				visibility: hidden;
 			}
 			#header {
 				display: flex;
 				align-items: center;
-				font-family: Permian Serif;
+				font-family: Permian Serif, Serif;
 				padding: 18px 0 18px 18px;
 				background-color: #1d1f21;
 				position: fixed;
 				width: 100%;
 				z-index: 999;
+				height: 28px;
 			}
 			#headerlarge {
 				font-size: 25px;
@@ -71,7 +46,6 @@ if(!$new) {
 			#areacontainer > pre {
 				margin: 0px;
 				padding-left: 18px;
-				height: 100%;
 				padding-top: 79px;
 				padding-bottom: 10px;
 				font-size: 13px;
@@ -96,6 +70,31 @@ if(!$new) {
 				position: absolute;
 				z-index: 10;
 			}
+			#ctext {
+				transition: color 0.2s linear;
+			}
+			#areacontainer {
+				display: none;
+				overflow: auto;
+			}
+			#container-curtain {
+				position: absolute;
+				z-index: 100;
+				height: 100%;
+				width: 100%;
+				background-color: #282b2e;
+				transition: opacity 0.2s;
+			}
+			.headerlight {
+				display: block;
+				color: #898989;
+			}
+			.highlight {
+				margin-left: auto;
+				margin-right: 18px;
+				opacity: 0;
+				transition: 0.2s opacity;
+			}
 			<?php include "../scripts/php/clippings/fonts/PermianSerif.php" ?>
 		</style>
 		<?php include "../scripts/php/clippings/header.php" ?>
@@ -103,43 +102,84 @@ if(!$new) {
 	<body>
 		<div id="wrapper">
 			<div id="header">
-				<span id="headerlarge"><?=$filename ?></span><span id="headersmall">&nbsp;&#x2013;&nbsp; <span id="ctext">loading...</span></span>
+				<span id="headerlarge"></span><span id="headersmall"><span id="ctext">Loading...</span></span>
+				<span class="headerlight highlight">Highlighting As: <span id="highlight-status">unknown</span></span>
 			</div>
+			<div id="container-curtain"></div>
 			<div id="areacontainer">
 				<div id="line-numbers"></div>
 				<div id="line-back"></div>
-				<pre id="area" class="hljs js" contenteditable="<?php if($new) {echo "true";} else {echo "false";} ?>"><?=$fcontent ?></pre>
+				<pre id="area" class="hljs" contenteditable="false"></pre>
 			</div>
 		</div>
 		<script type="text/javascript" src="highlightjs/highlight.pack.js"></script>
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 		<script type="text/javascript">
-			var area = document.getElementById("area");
-			var newf = <?php if($new) {echo "true";} else {echo "false";} ?>;
-			var lang = <?=$lang ?>;
-			if(!newf) {
-				var lines = <?=$linecount; ?>;
-				} else {
-					var lines = 0;
+			hljs.configure({useBR: true});
+			var filename = <?=$filename ?>;
+			var newfile = <?=$new ?>;
+			var writeHeader = function(msg) {
+				if(!newfile) {
+					$("#headerlarge").text(msg).html();
 				}
-			var i = 1;
-			window.onload = function() {
-				hljs.configure({useBR: true});
-				hljs.highlightBlock(area);
-				if(newf) {
-					document.getElementById("headersmall").innerHTML = "";
+			}
+			var writeSecondary = function(msg) {
+				if(!newfile) {
+					$("#ctext").text(msg).html();
+					$("#ctext").html("&nbsp–&nbsp"+$("#ctext").html());
 				} else {
-					document.getElementById("ctext").innerHTML = "saved <?=$modate ?>";
-					while(i <= lines) {
-						document.getElementById("line-numbers").innerHTML += i+"<br>\n";
-						i++;
-					}
+					$("#ctext").text(msg).html();
 				}
-				area.style.visibility = "visible";
-			};
-			area.onkeyup = function() {
-				hljs.highlightBlock(area);
-			};
+			}
+			var error = function(msg) {
+				writeHeader(filename);
+				$("#ctext").css("color","#d13131").text(msg).html();
+			}
+			var lines = function(numlines) {
+				var i = 1;
+				while(i <= numlines) {
+					document.getElementById("line-numbers").innerHTML += i+"<br>\n";
+					i++;
+				}
+			}
+			var populate = function(str, lang) {
+				$("#area").html(str);
+				if(hljs.getLanguage(lang) != undefined) {
+					$(".hljs").attr("class", $(".hljs").attr("class")+" "+lang);
+					$("#highlight-status").html(lang);
+					$(".highlight").css("opacity", 1);
+				} else {
+					$("#highlight-status").html("unknown");
+					$(".highlight").css("opacity", 1);
+				}
+				hljs.highlightBlock($("#area")[0]);
+			}
+			var update = function() {
+				hljs.highlightBlock($("#area")[0]);
+			}
+			var parse = function(obj) {
+				if(obj.status) {
+					writeHeader(obj.filename);
+					writeSecondary("saved "+obj.modate);
+					lines(obj.linecount);
+					populate(obj.content, obj.lang);
+					$("#areacontainer").css("display","initial");
+					$("#container-curtain").css("opacity", 0);
+					setTimeout(function() {
+						$("#container-curtain").css("display", "none");
+					}, 200);
+				} else {
+					error(obj.error);
+					return;
+				}
+			}
+			if(!newfile) {
+				$.ajax("api/?info="+encodeURIComponent(filename), {timeout: 10000}).done(function(response) {
+					parse(JSON.parse(response));
+				}).fail(function() {
+					error("Could not load snippet");
+				});
+			}
 		</script>
 	</body>
 </html>
