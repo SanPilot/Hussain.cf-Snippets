@@ -13,7 +13,7 @@ if(isset($_GET['f']) && $_GET['f'] != "") {
 		<title>
 			Loading - Snippets
 		</title>
-		<link rel="stylesheet" href="highlightjs/styles/obsidian.css">
+		<link rel="stylesheet" href="hljs-styles/obsidian.css">
 		<style type="text/css">
 			body, html {
 				margin: 0px;
@@ -27,7 +27,7 @@ if(isset($_GET['f']) && $_GET['f'] != "") {
 				display: flex;
 				align-items: center;
 				font-family: Permian Serif, Serif;
-				padding: 18px 0 18px 18px;
+				padding: 18px;
 				background-color: #1d1f21;
 				position: fixed;
 				width: 100%;
@@ -71,7 +71,7 @@ if(isset($_GET['f']) && $_GET['f'] != "") {
 				z-index: 10;
 			}
 			#ctext {
-				transition: color 0.2s linear;
+				transition: color 0.5s linear;
 			}
 			#areacontainer {
 				display: none;
@@ -88,12 +88,46 @@ if(isset($_GET['f']) && $_GET['f'] != "") {
 			.headerlight {
 				display: block;
 				color: #898989;
+				font-size: 18px;
 			}
 			.highlight {
 				margin-left: auto;
 				margin-right: 18px;
 				opacity: 0;
 				transition: 0.2s opacity;
+			}
+			.headerbutton {
+				-webkit-touch-callout: none;
+				-webkit-user-select: none;
+				-khtml-user-select: none;
+				-moz-user-select: none;
+				-ms-user-select: none;
+				user-select: none;
+				height: 24px;
+				color: #3e3e3e;
+				display: flex;
+				align-items: center;
+				font-size: 15px;
+				font-weight: bold;
+				background-color: #ebebeb;
+				padding: 20px;
+				transition: background-color 0.2s
+			}
+			.headerbutton:hover {
+				background-color: #ffffff;
+				cursor: default;
+			}
+			.headerbutton:active {
+				background-color: #c4c4c4;
+			}
+			#highlight-status {
+				font-weight: bold;
+			}
+			#new {
+				margin-right: 18px;
+			}
+			#fork {
+				margin-left: 18px;
 			}
 			<?php include "../scripts/php/clippings/fonts/PermianSerif.php" ?>
 		</style>
@@ -104,6 +138,8 @@ if(isset($_GET['f']) && $_GET['f'] != "") {
 			<div id="header">
 				<span id="headerlarge"></span><span id="headersmall"><span id="ctext">Loading...</span></span>
 				<span class="headerlight highlight">Highlighting As: <span id="highlight-status">unknown</span></span>
+				<div class="headerbutton" id="fork">FORK THIS SNIPPET</div>
+				<div class="headerbutton" id="new">NEW SNIPPET</div>
 			</div>
 			<div id="container-curtain"></div>
 			<div id="areacontainer">
@@ -112,8 +148,9 @@ if(isset($_GET['f']) && $_GET['f'] != "") {
 				<pre id="area" class="hljs" contenteditable="false"></pre>
 			</div>
 		</div>
-		<script type="text/javascript" src="highlightjs/highlight.pack.js"></script>
+		<script type="text/javascript" src="scripts/highlight.pack.js"></script>
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+		<script type="text/javascript" src="scripts/store.min.js"></script>
 		<script type="text/javascript">
 			hljs.configure({useBR: true});
 			var filename = <?=$filename ?>;
@@ -134,6 +171,9 @@ if(isset($_GET['f']) && $_GET['f'] != "") {
 			var error = function(msg) {
 				writeHeader(filename);
 				$("#ctext").css("color","#d13131").text(msg).html();
+				if(!newfile) {
+					$("#ctext").html("&nbsp–&nbsp"+$("#ctext").html());
+				}
 			}
 			var lines = function(numlines) {
 				var i = 1;
@@ -174,7 +214,7 @@ if(isset($_GET['f']) && $_GET['f'] != "") {
 				}
 			}
 			if(!newfile) {
-				$.ajax("api/?info="+encodeURIComponent(filename), {timeout: 10000}).done(function(response) {
+				$.ajax("api/?info="+encodeURIComponent(filename), {timeout: 5000}).done(function(response) {
 					parse(JSON.parse(response));
 				}).fail(function() {
 					error("Could not load snippet");
