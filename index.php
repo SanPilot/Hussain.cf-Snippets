@@ -103,31 +103,28 @@ if(isset($_GET['f']) && $_GET['f'] != "") {
 				-moz-user-select: none;
 				-ms-user-select: none;
 				user-select: none;
-				height: 24px;
 				color: #3e3e3e;
 				display: flex;
 				align-items: center;
 				font-size: 15px;
 				font-weight: bold;
 				background-color: #ebebeb;
-				padding: 20px;
-				transition: background-color 0.2s
+				padding: 10px;
+				margin: 5px;
+				transition: background-color 0.2s;
 			}
 			.headerbutton:hover {
 				background-color: #ffffff;
 				cursor: default;
 			}
 			.headerbutton:active {
-				background-color: #c4c4c4;
+				background-color: #434343;
 			}
 			#highlight-status {
 				font-weight: bold;
 			}
 			#new {
-				margin-right: 18px;
-			}
-			#fork {
-				margin-left: 18px;
+				margin-right: 36px;
 			}
 			<?php include "../scripts/php/clippings/fonts/PermianSerif.php" ?>
 		</style>
