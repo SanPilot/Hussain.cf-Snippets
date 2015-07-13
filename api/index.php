@@ -22,7 +22,7 @@ if(isset($_GET['info']) && $_GET["info"] != "") {
 		$return['modate'] = date("F j, Y", filemtime($file)) . " at " . date("g:i a", filemtime($file));
 		$return['lang'] = $lang;
 		$return['linecount'] = count(file($file)) + 1;
-		if(filesize($file) <= 104857600) {
+		if(filesize($file) <= 1048576) {
 			if(filesize($file) > 0 && file_get_contents($file) == "") {
 				$return['error'] = "There was an error reading the Snippet $filename";
 			} else {
@@ -37,7 +37,7 @@ if(isset($_GET['info']) && $_GET["info"] != "") {
 				);
 			}
 		} else {
-			$return['error'] = "Snippet $filename is larger than 100MB";
+			$return['error'] = "Snippet $filename is larger than 1MB";
 		}
 	} else {
 		$return['error'] = "Snippet $filename does not exist";
