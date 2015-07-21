@@ -51,7 +51,7 @@ if(isset($_POST['publish'], $_POST['content']) && $_POST['publish'] != "" && $_P
 		"status" => false,
 		"error" => "There was an error publishing the snippet"
 	);
-	if(length($filename) <= 20) {
+	if(length($filename) <= 40) {
 		if(is_dir("../$filename") || is_file("../$filename") || is_file("../files/$filename")) {
 			$return['error'] = "Name is already taken";
 		} else {
@@ -64,7 +64,7 @@ if(isset($_POST['publish'], $_POST['content']) && $_POST['publish'] != "" && $_P
 			}
 		}
 	} else {
-		$return['error'] = "Name is longer than 20 characters";
+		$return['error'] = "Name is longer than 40 characters";
 	}
 	echo json_encode($return);
 	exit();

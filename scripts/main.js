@@ -255,7 +255,7 @@ if(!newfile) {
 		} else {
 			headermod = true;
 		}
-		if($(this).html().length <= 20 && $(this).html().length > 0) {
+		if($(this).html().length <= 40 && $(this).html().length > 0) {
 			clearError();
 			$.ajax("api/?name_available="+encodeURIComponent($(this).html()), {timeout: 5000}).done(function(response) {
 				if(!JSON.parse(response).status) {
@@ -263,8 +263,8 @@ if(!newfile) {
 				}
 			});
 		} else {
-			if($(this).html().length > 20) {
-				error("Name is longer than 20 characters");
+			if($(this).html().length > 40) {
+				error("Name is longer than 40 characters");
 			} else {
 				error("You must provide a name", false);
 			}

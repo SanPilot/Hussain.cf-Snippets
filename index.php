@@ -23,7 +23,7 @@ if(isset($_GET['f']) && $_GET['f'] != "") {
 	<body>
 		<div id="wrapper">
 			<div id="header">
-				<span id="headerlarge"></span><span id="headersmall"><span id="ctext">Loading...</span></span>
+				<span id="headerlarge" spellcheck="false"></span><span id="headersmall"><span id="ctext">Loading...</span></span>
 				<span class="headerlight highlight"><span id="highlightinr">Highlighting As: </span><span id="highlight-status">unknown</span></span>
 				<svg height="19px" version="1.1" viewBox="0 0 14 19" width="14px" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="download-button">
 					<g fill="none" fill-rule="evenodd" id="Page-1" stroke="none" stroke-width="1">
