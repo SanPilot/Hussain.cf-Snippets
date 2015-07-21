@@ -5,6 +5,12 @@
 	* It then outputs this to the standard output (stdout) using console.log().
 */
 
+// Begin timer
+var start = new Date().getMilliseconds();
+
+// For end time
+var end = 1;
+
 // Initialization of variables
 
 // Max number
@@ -24,6 +30,20 @@ int[2] = 1;
 
 // Total value so far
 var total = 0;
+
+// Function to add commas
+var addCommas = function(nStr)
+{
+	nStr += '';
+	var x = nStr.split('.');
+	var x1 = x[0];
+	var x2 = x.length > 1 ? '.' + x[1] : '';
+	var rgx = /(\d+)(\d{3})/;
+	while (rgx.test(x1)) {
+		x1 = x1.replace(rgx, '$1' + ',' + '$2');
+	}
+	return x1 + x2;
+}
 
 // Main while loop
 while(int[1] + int[2] < max) {
@@ -46,4 +66,9 @@ while(int[1] + int[2] < max) {
 }
 
 // Output result
-console.log(total);
+console.log(addCommas(total));
+
+// Output total execution time
+end = new Date().getMilliseconds() - start;
+
+console.log("Finished in " + end / 1000 + "s");

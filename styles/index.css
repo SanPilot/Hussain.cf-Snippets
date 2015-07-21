@@ -1,0 +1,145 @@
+body, html {
+	margin: 0px;
+	padding: 0px;
+	background-color: #282b2e;
+}
+#header {
+	display: flex;
+	align-items: center;
+	font-family: Permian Serif, Serif;
+	padding: 18px;
+	padding-left: 10px;
+	background-color: #1d1f21;
+	position: fixed;
+	width: 100%;
+	z-index: 999;
+	height: 28px;
+}
+#headerlarge {
+	font-size: 25px;
+	padding: 8px;
+	color: #ebebeb;
+	display: inline-block;
+	outline: none;
+	transition: background-color 0.2s;
+}
+#headersmall {
+	font-size: 20px;
+	color: #aaaaaa;
+}
+#area {
+	margin: 0;
+	padding: 78px 18px 18px 18px;
+	font-size: 13px;
+	outline: none;
+	font-family: monospace;
+	resize: none;
+	border: none;
+	width: 100%;
+	overflow: auto;
+	overflow-y: hidden;
+}
+#line-numbers {
+	float: left;
+	background-color: #3e4348;
+	color: #ffffff;
+	padding: 79px 0 10px 0;
+	width: 40px;
+	font-size: 13px;
+	text-align: center;
+	font-family: monospace;
+	z-index: 20;
+	position: relative;
+}
+#line-back {
+	float: left;
+	height: 100%;
+	background-color: #3e4348;
+	width: 40px;
+	position: absolute;
+	z-index: 10;
+}
+#ctext {
+	transition: color 0.3s linear;
+}
+#areacontainer {
+	display: none;
+	height: 100%;
+	width: 100%;
+}
+#container-curtain {
+	position: absolute;
+	z-index: 100;
+	height: 100%;
+	width: 100%;
+	background-color: #282b2e;
+	transition: opacity 0.2s;
+}
+.headerlight {
+	display: block;
+	color: #898989;
+	font-size: 18px;
+}
+.highlight {
+	margin-left: auto;
+	margin-right: 18px;
+	opacity: 0;
+	transition: opacity 0.2s;
+}
+.headerbutton {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	color: #3e3e3e;
+	display: flex;
+	align-items: center;
+	font-size: 15px;
+	font-weight: bold;
+	background-color: #ebebeb;
+	padding: 10px;
+	margin: 5px;
+	transition: background-color 0.2s;
+}
+.headerbutton:hover {
+	background-color: #ffffff;
+}
+.headerbutton:active {
+	background-color: #434343;
+}
+#highlight-status {
+	font-weight: bold;
+}
+#newlink, #publink {
+	text-decoration: none;
+	color: #3e3e3e;
+}
+#newlink {
+	margin-right: 20px;
+}
+#line-numbers-container {
+	float: left;
+}
+#twrap {
+	overflow: hidden;
+	padding-right: 31px;
+}
+#download-button > #Page-1 {
+	fill: #ebebeb;
+	transition: fill 0.2s;
+}
+#download-button:hover > #Page-1 {
+	fill: #ffffff;
+}
+#download-button:active > #Page-1 {
+	fill: #434343;
+}
+#download-button {
+	margin-right: 15px;
+	display: none;
+}
+#download-iframe {
+	display: none;
+}
