@@ -116,13 +116,15 @@ var publish = function() {
 		}).done(function(response) {
 			pubObj = parse(JSON.parse(response));
 			if(pubObj.status) {
-				window.location = $("#headerlarge").html();
 				if(store.enabled) {
 					store.remove("draft");
 					store.remove("name");
 				}
-			} else {
+				window.location = $("#headerlarge").html();
+			} else if(response != "") {
 				error(pubObj.error);
+			} else {
+				error("Could not publish snippet");
 			}
 		}).fail(function() {
 			error("Could not publish snippet");
