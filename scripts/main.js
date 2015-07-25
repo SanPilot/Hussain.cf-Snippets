@@ -38,19 +38,17 @@ var populate = function(str, lang) {
 	} else {
 		$("#area").val(str);
 	}
-	if(lang != "") {
-		if(hljs.getLanguage(lang) != undefined) {
-			$(".hljs").attr("class", $(".hljs").attr("class")+" "+lang);
-			if(hljs.getLanguage(lang).aliases.sort(function (a, b) {return b.length - a.length;})[0].length < lang.length) {
-				$("#highlight-status").html(lang);
-			} else {
-				$("#highlight-status").html(hljs.getLanguage(lang).aliases.sort(function (a, b) {return b.length - a.length;})[0]);
-			}
-			$(".highlight").css("opacity", 1);
+	if(hljs.getLanguage(lang) != undefined) {
+		$(".hljs").attr("class", $(".hljs").attr("class")+" "+lang);
+		if(hljs.getLanguage(lang).aliases.sort(function (a, b) {return b.length - a.length;})[0].length < lang.length) {
+			$("#highlight-status").html(lang);
 		} else {
-			$("#highlight-status").html("unknown");
-			$(".highlight").css("opacity", 1);
+			$("#highlight-status").html(hljs.getLanguage(lang).aliases.sort(function (a, b) {return b.length - a.length;})[0]);
 		}
+		$(".highlight").css("opacity", 1);
+	} else {
+		$("#highlight-status").html("unknown");
+		$(".highlight").css("opacity", 1);
 	}
 	hljs.highlightBlock($("#area")[0]);
 };
@@ -114,7 +112,7 @@ var publish = function() {
 				"content": $("#area").val()
 			}
 		}).done(function(response) {
-			pubObj = parse(JSON.parse(response));
+			pubObj = response;
 			if(pubObj.status) {
 				if(store.enabled) {
 					store.remove("draft");
@@ -190,7 +188,7 @@ $(document).ready(function() {
 });
 if(!newfile) {
 	$.ajax("api/?info="+encodeURIComponent(filename), {timeout: 5000}).done(function(response) {
-		parse(JSON.parse(response));
+		parse(response);
 	}).fail(function() {
 		error("Could not load snippet");
 	});
@@ -265,8 +263,8 @@ if(!newfile) {
 		if($(this).html().length <= 40 && $(this).html().length > 0) {
 			clearError();
 			$.ajax("api/?name_available="+encodeURIComponent($(this).html()), {timeout: 5000}).done(function(response) {
-				if(!JSON.parse(response).status) {
-					error(JSON.parse(response).error);
+				if(!response.status) {
+					error(response.error);
 				}
 			});
 		} else {
