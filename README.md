@@ -1,7 +1,7 @@
 #Hussain.cf Snippets
 This repostitory contains the source code of the website located [here](https://uploads.hussain.cf/snippets/).
 
-You can use it to share small files of code with others.
+You can use it to share syntax-highlighted "Snippets" of code with others.
 
 ***Still a work in progress***.
 
