@@ -30,7 +30,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
-Software provided by [highlight.js](https://hightlightjs.org) (namely all files in /styles/hljs-styles/ and the file /scripts/highlight.pack.js) are licensed under the [BSD License](http://opensource.org/licenses/BSD-3-Clause):
+Software provided by [highlight.js](https://hightlightjs.org) (namely all files in `/styles/hljs-styles/` and the file `/scripts/highlight.pack.js`) are licensed under the [BSD License](http://opensource.org/licenses/BSD-3-Clause):
 
 Copyright (c) 2006, Ivan Sagalaev
 All rights reserved.
