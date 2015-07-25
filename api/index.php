@@ -1,4 +1,5 @@
 <?php
+header("Content-type: text/json");
 if(isset($_GET['info']) && $_GET["info"] != "") {
 	$file = "../files/".$_GET["info"];
 	$filename = htmlspecialchars($_GET["info"]);
@@ -45,18 +46,18 @@ if(isset($_GET['info']) && $_GET["info"] != "") {
 	echo json_encode($return);
 	exit();
 }
-if(isset($_GET['publish'], $_GET['content']) && $_GET['publish'] != "" && $_GET['content'] != "") {
-	$filename = $_GET['publish'];
+if(isset($_POST['publish'], $_POST['content']) && $_POST['publish'] != "" && $_POST['content'] != "") {
+	$filename = $_POST['publish'];
 	$return = array(
 		"status" => false,
 		"error" => "There was an error publishing the snippet"
 	);
 	if(length($filename) <= 40) {
 		if(length($filename) > 0) {
-			if(is_dir("../$filename") || is_file("../$filename") || is_file("../files/$filename")) {
+			if(is_dir("../".$filename) || is_file("../".$filename) || is_file("../files/".$filename)) {
 				$return['error'] = "Name is already taken";
 			} else {
-				$save = file_put_contents("../files/$filename", $_GET['content']);
+				$save = file_put_contents("../files/".$filename, $_POST['content']);
 				if($save) {
 					$return = array(
 						"status" => true,

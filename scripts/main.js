@@ -171,10 +171,10 @@ var init = function() {
 	var resize = function() {
 		text.style.height = 'auto';
 		text.style.height = text.scrollHeight - 78 +'px';
-	}
+	};
 	var delayedResize = function() {
 		setTimeout(resize, 0);
-	}
+	};
 	observe(text, 'change', resize);
 	observe(text, 'cut', delayedResize);
 	observe(text, 'paste', delayedResize);
@@ -183,7 +183,7 @@ var init = function() {
 	text.focus();
 	text.select();
 	resize();
-}
+};
 $(document).ready(function() {
 	init();
 	$("#area")[0].selectionStart = $("#area")[0].selectionEnd = 0;
