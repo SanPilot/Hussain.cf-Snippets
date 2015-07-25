@@ -3,7 +3,7 @@ This repostitory contains the source code of the website located [here](https://
 
 You can use it to share small files of code with others.
 
-***Still a work in progress***
+***Still a work in progress***.
 
 ##LICENCE
 All code, except code provided by [highlight.js](https://hightlightjs.org) is licensed under [MIT Licence](http://opensource.org/licenses/MIT):
