@@ -45,23 +45,27 @@ if(isset($_GET['info']) && $_GET["info"] != "") {
 	echo json_encode($return);
 	exit();
 }
-if(isset($_POST['publish'], $_POST['content']) && $_POST['publish'] != "" && $_POST['content'] != "") {
-	$filename = $_POST['publish'];
+if(isset($_GET['publish'], $_GET['content']) && $_GET['publish'] != "" && $_GET['content'] != "") {
+	$filename = $_GET['publish'];
 	$return = array(
 		"status" => false,
 		"error" => "There was an error publishing the snippet"
 	);
 	if(length($filename) <= 40) {
-		if(is_dir("../$filename") || is_file("../$filename") || is_file("../files/$filename")) {
-			$return['error'] = "Name is already taken";
-		} else {
-			$save = file_put_contents("../files/$filename", $_POST['content']);
-			if($save) {
-				$return = array(
-					"status" => true,
-					"error" => ""
-				);
+		if(length($filename) > 0) {
+			if(is_dir("../$filename") || is_file("../$filename") || is_file("../files/$filename")) {
+				$return['error'] = "Name is already taken";
+			} else {
+				$save = file_put_contents("../files/$filename", $_GET['content']);
+				if($save) {
+					$return = array(
+						"status" => true,
+						"error" => ""
+					);
+				}
 			}
+		} else {
+			$return['error'] = "You must provide a name";
 		}
 	} else {
 		$return['error'] = "Name is longer than 40 characters";

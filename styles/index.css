@@ -29,14 +29,14 @@ body, html {
 }
 #area {
 	margin: 0;
-	padding: 78px 18px 18px 18px;
+	padding: 78px 18px 0px 0px;
 	font-size: 13px;
 	outline: none;
 	font-family: monospace;
 	resize: none;
 	border: none;
 	width: 100%;
-	overflow: auto;
+	overflow-x: auto;
 	overflow-y: hidden;
 }
 #line-numbers {
@@ -124,7 +124,7 @@ body, html {
 }
 #twrap {
 	overflow: hidden;
-	padding-right: 31px;
+	padding: 0 50px 0 18px;
 }
 #download-button > #Page-1 {
 	fill: #ebebeb;

@@ -166,11 +166,11 @@ else {
 }
 var init = function() {
 	var text = $("#area")[0];
-	function resize () {
+	var resize = function() {
 		text.style.height = 'auto';
-		text.style.height = text.scrollHeight+'px';
+		text.style.height = text.scrollHeight - 78 +'px';
 	}
-	function delayedResize () {
+	var delayedResize = function() {
 		setTimeout(resize, 0);
 	}
 	observe(text, 'change', resize);
@@ -225,7 +225,7 @@ if(!newfile) {
 				linecount--;
 			}
 			lines(linecount);
-		}, 0);
+		}, 100);
 		if(e.keyCode === 9) {
 			var start = this.selectionStart;
 			var end = this.selectionEnd;
@@ -238,6 +238,11 @@ if(!newfile) {
 		}
 	}).on("keyup", function() {
 		clearInterval(lineinterval);
+		linecount = $("#area").val().split(/\r*\n/).length;
+		if(navigator.userAgent.indexOf("MSIE") != -1) {
+			linecount--;
+		}
+		lines(linecount);
 	});
 	setInterval(update, 500);
 	if(!headermod) {
@@ -284,5 +289,5 @@ if(!newfile) {
 	setTimeout(function() {
 		$("#container-curtain").css("display", "none");
 	}, 200);
-	$("#area").attr("contenteditable","true").focus();
+	$("#area").focus();
 }
