@@ -52,8 +52,8 @@ if(isset($_POST['publish'], $_POST['content']) && $_POST['publish'] != "" && $_P
 		"status" => false,
 		"error" => "There was an error publishing the snippet"
 	);
-	if(length($filename) <= 40) {
-		if(length($filename) > 0) {
+	if(strlen($filename) <= 40) {
+		if(strlen($filename) > 0) {
 			if(is_dir("../".$filename) || is_file("../".$filename) || is_file("../files/".$filename)) {
 				$return['error'] = "Name is already taken";
 			} else {
