@@ -97,8 +97,8 @@ var cancel = function() {
 	if(store.enabled) {
 		store.remove("draft");
 		store.remove("name");
-		history.back();
 	}
+	history.back();
 };
 var publish = function() {
 	if($("#area").val() == "") {
