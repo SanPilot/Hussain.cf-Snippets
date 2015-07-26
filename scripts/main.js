@@ -132,7 +132,7 @@ var publish = function() {
 var parse = function(obj) {
 	if(obj.status) {
 		document.title = obj.filename+" - Snippets";
-		$("#publink").attr("href", "../?fork="+encodeURIComponent(obj.filename));
+		$("#publink").attr("href", "../snippets/?fork="+encodeURIComponent(obj.filename));
 		writeHeader(obj.filename);
 		writeSecondary("modified "+obj.modate);
 		lines(obj.linecount);
@@ -149,7 +149,7 @@ var parse = function(obj) {
 		document.title = obj.filename+"Error - Snippets";
 		error(obj.error, false);
 		$("#fork").html("CREATE THIS SNIPPET");
-		$("#publink").attr("href", "../?create="+encodeURIComponent(filename));
+		$("#publink").attr("href", "../snippets/?create="+encodeURIComponent(filename));
 		return;
 	}
 };

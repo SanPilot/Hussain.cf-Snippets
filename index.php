@@ -39,7 +39,7 @@ if(isset($_GET['f']) && $_GET['f'] != "") {
 				</svg>
 				<iframe id="download-iframe"></iframe>
 				<a id="publink"><div class="headerbutton" id="fork">FORK THIS SNIPPET</div></a>
-				<a href="../" id="newlink"><div class="headerbutton" id="new">NEW SNIPPET</div></a>
+				<a href="../snippets/" id="newlink"><div class="headerbutton" id="new">NEW SNIPPET</div></a>
 			</div>
 			<div id="container-curtain"></div>
 			<div id="areacontainer">
