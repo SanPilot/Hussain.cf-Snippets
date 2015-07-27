@@ -1,5 +1,5 @@
 hljs.configure({useBR: true});
-var linecount, lineinterval, storeBool, pubObj;
+var linecount, lineinterval, storeBool, pubObj, observe, changestyleinterval;
 var writeHeader = function(msg) {
 	$("#headerlarge").html(msg);
 };
@@ -40,7 +40,7 @@ var populate = function(str, lang) {
 	}
 	if(hljs.getLanguage(lang) != undefined) {
 		$(".hljs").attr("class", $(".hljs").attr("class")+" "+lang);
-		if(hljs.getLanguage(lang).aliases.sort(function (a, b) {return b.length - a.length;})[0].length < lang.length) {
+		if(hljs.getLanguage(lang).aliases == undefined || hljs.getLanguage(lang).aliases.sort(function (a, b) {return b.length - a.length;})[0].length < lang.length) {
 			$("#highlight-status").html(lang);
 		} else {
 			$("#highlight-status").html(hljs.getLanguage(lang).aliases.sort(function (a, b) {return b.length - a.length;})[0]);
@@ -153,7 +153,6 @@ var parse = function(obj) {
 		return;
 	}
 };
-var observe;
 if (window.attachEvent) {
 	observe = function (element, event, handler) {
 		element.attachEvent('on'+event, handler);
@@ -186,13 +185,28 @@ $(document).ready(function() {
 	init();
 	$("#area")[0].selectionStart = $("#area")[0].selectionEnd = 0;
 });
+var changeStyle = function(newstyle) {
+	Cookies.set("style", newstyle, {expires: 365});
+	$("link[rel='stylesheet']")[0].href = "styles/hljs-styles/"+newstyle+".css";
+	$("body, html").css("background-color", $(".hljs").css("background-color"));
+	changestyleinterval = setInterval(function() {
+		$("body").css("background-color", $(".hljs").css("background-color"));
+	}, 1);
+	setTimeout(function() {
+		clearInterval(changestyleinterval);
+	}, 500);
+};
 if(!newfile) {
 	$.ajax("api/?info="+encodeURIComponent(filename), {timeout: 5000}).done(function(response) {
 		parse(response);
 	}).fail(function() {
 		error("Could not load snippet");
 	});
+	if(Cookies.get("style") != undefined) {
+		changeStyle(Cookies.get("style"));
+	}
 } else {
+	$("#styleselect").css("display", "none");
 	$input = $("#area");
 	$textarea = $("<textarea></textarea>").attr({
 		id: $input.attr('id'),

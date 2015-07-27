@@ -38,6 +38,10 @@ if(isset($_GET['f']) && $_GET['f'] != "") {
 					</g>
 				</svg>
 				<iframe id="download-iframe"></iframe>
+				<select id="styleselect">
+					<option id="styledisabled" disabled selected>STYLE</option>
+					<option>Obsidian</option>
+				</select>
 				<a id="publink"><div class="headerbutton" id="fork">FORK THIS SNIPPET</div></a>
 				<a href="../snippets/" id="newlink"><div class="headerbutton" id="new">NEW SNIPPET</div></a>
 			</div>
@@ -56,10 +60,10 @@ if(isset($_GET['f']) && $_GET['f'] != "") {
 			var filename = <?=$filename ?>;
 			var newfile = <?=$new ?>;
 		</script>
-		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 		<script type="text/javascript" src="scripts/highlight.pack.js"></script>
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.0.3/js.cookie.min.js"></script>
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/store.js/1.3.17/store+json2.min.js"></script>
-		<script type="text/javascript" src="scripts/main.js">
-		</script>
+		<script type="text/javascript" src="scripts/main.js"></script>
 	</body>
 </html>
