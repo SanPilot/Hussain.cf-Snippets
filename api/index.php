@@ -16,7 +16,8 @@ if(isset($_GET['info']) && $_GET["info"] != "") {
 		"modate" => "",
 		"lang" => "",
 		"linecount" => 0,
-		"content" => ""
+		"content" => "",
+		"rawcontent" => ""
 	);
 	if(is_file($file)) {
 		$return['filename'] = $filename;
@@ -25,7 +26,7 @@ if(isset($_GET['info']) && $_GET["info"] != "") {
 		$return['linecount'] = count(file($file)) + 1;
 		if(filesize($file) <= 1048576) {
 			if(filesize($file) > 0 && file_get_contents($file) == "") {
-				$return['error'] = "There was an error reading the Snippet";
+				$return['error'] = "There was an error reading the snippet";
 			} else {
 				$return = array(
 					"status" => true,
@@ -34,7 +35,8 @@ if(isset($_GET['info']) && $_GET["info"] != "") {
 					"modate" => date("F j, Y", filemtime($file)) . " at " . date("g:i a", filemtime($file)),
 					"lang" => $lang,
 					"linecount" => count(file($file)) + 1,
-					"content" => nl2br(htmlspecialchars(file_get_contents($file)), false)
+					"content" => nl2br(htmlspecialchars(file_get_contents($file)), false),
+					"rawcontent" => file_get_contents($file)
 				);
 			}
 		} else {
@@ -52,24 +54,28 @@ if(isset($_POST['publish'], $_POST['content']) && $_POST['publish'] != "" && $_P
 		"status" => false,
 		"error" => "There was an error publishing the snippet"
 	);
-	if(strlen($filename) <= 40) {
-		if(strlen($filename) > 0) {
-			if(is_dir("../".$filename) || is_file("../".$filename) || is_file("../files/".$filename)) {
-				$return['error'] = "Name is already taken";
-			} else {
-				$save = file_put_contents("../files/".$filename, $_POST['content']);
-				if($save) {
-					$return = array(
-						"status" => true,
-						"error" => ""
-					);
+	if(!preg_match("[^/?*:;{}\\]+", $_POST['publish'])) {
+		if(strlen($filename) <= 40) {
+			if(strlen($filename) > 0) {
+				if(is_dir("../".$filename) || is_file("../".$filename) || is_file("../files/".$filename)) {
+					$return['error'] = "Name is already taken";
+				} else {
+					$save = file_put_contents("../files/".$filename, $_POST['content']);
+					if($save) {
+						$return = array(
+							"status" => true,
+							"error" => ""
+						);
+					}
 				}
+			} else {
+				$return['error'] = "You must provide a name";
 			}
 		} else {
-			$return['error'] = "You must provide a name";
+			$return['error'] = "Name is longer than 40 characters";
 		}
 	} else {
-		$return['error'] = "Name is longer than 40 characters";
+		$return['error'] = "Name is invalid";
 	}
 	echo json_encode($return);
 	exit();
@@ -90,7 +96,7 @@ if(isset($_GET['name_available']) && $_GET['name_available'] != "") {
 	} else {
 		$return = array(
 			"status" => false,
-			"error" => "Name $filename is invalid"
+			"error" => "Name is invalid"
 		);
 	}
 	echo json_encode($return);

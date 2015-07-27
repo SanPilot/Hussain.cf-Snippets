@@ -196,6 +196,12 @@ var changeStyle = function(newstyle) {
 		clearInterval(changestyleinterval);
 	}, 500);
 };
+var getParameterByName = function(name) {
+	name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+	var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+		results = regex.exec(location.search);
+	return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
 if(!newfile) {
 	$.ajax("api/?info="+encodeURIComponent(filename), {timeout: 5000}).done(function(response) {
 		parse(response);
@@ -206,6 +212,23 @@ if(!newfile) {
 		changeStyle(Cookies.get("style"));
 	}
 } else {
+	if(getParameterByName("fork") != "") {
+		$.ajax("api/?info="+getParameterByName("fork"), {timeout: 5000}).done(function(response) {
+			if(response.status) {
+				$("#headerlarge").html(response.filename + " - fork");
+				$("#area").val(response.rawcontent);
+			} else {
+				error(response.error);
+			}
+		}).fail(function() {
+			error("Could not load snippet");
+		});
+	} else if(getParameterByName("create") != "") {
+		setTimeout(function() {
+			$("#headerlarge").html(getParameterByName("create")).css("font-style", "initial");
+			headermod = true;
+		}, 1);
+	}
 	$("#styleselect").css("display", "none");
 	$input = $("#area");
 	$textarea = $("<textarea></textarea>").attr({
