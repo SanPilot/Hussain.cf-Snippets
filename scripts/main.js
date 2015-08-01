@@ -218,10 +218,12 @@ if(!newfile) {
 			if(response.status) {
 				$("#headerlarge").html(response.filename.replace(/(.+)(\..*)/, "$1"+".fork"+"$2"));
 				$("#area").val(response.rawcontent);
+				headermod = true;
+				$("#headerlarge").css("font-style", "initial");
 			} else {
 				error(response.error);
 			}
-			setTimeout(resize, 10);
+			setTimeout(resize, 100);
 		}).fail(function() {
 			error("Could not load snippet");
 		});
