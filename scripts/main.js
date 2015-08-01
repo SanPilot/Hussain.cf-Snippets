@@ -193,7 +193,7 @@ var changeStyle = function(newstyle) {
 	}, 1);
 	setTimeout(function() {
 		clearInterval(changestyleinterval);
-	}, 500);
+	}, 100);
 };
 var getParameterByName = function(name) {
 	name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
