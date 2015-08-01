@@ -153,25 +153,24 @@ var parse = function(obj) {
 		$("#styleselect").css("display", "none");
 	}
 };
-if (window.attachEvent) {
-	observe = function (element, event, handler) {
-		element.attachEvent('on'+event, handler);
+var init = function() {
+	if (window.attachEvent) {
+		observe = function (element, event, handler) {
+			element.attachEvent('on'+event, handler);
+		};
+	} else {
+		observe = function (element, event, handler) {
+			element.addEventListener(event, handler, false);
+		};
+	}
+	var text = $("#area")[0];
+	var resize = function() {
+		text.style.height = 'auto';
+		text.style.height = text.scrollHeight - 78 +'px';
 	};
-}
-else {
-	observe = function (element, event, handler) {
-		element.addEventListener(event, handler, false);
+	var delayedResize = function() {
+		setTimeout(resize, 0);
 	};
-}
-var text = $("#area")[0];
-var resize = function() {
-	text.style.height = 'auto';
-	text.style.height = text.scrollHeight - 78 +'px';
-};
-var delayedResize = function() {
-	setTimeout(resize, 0);
-};
-$(document).ready(function() {
 	observe(text, 'change', resize);
 	observe(text, 'cut', delayedResize);
 	observe(text, 'paste', delayedResize);
@@ -180,6 +179,9 @@ $(document).ready(function() {
 	text.focus();
 	text.select();
 	resize();
+};
+$(document).ready(function() {
+	init();
 	$("#area")[0].selectionStart = $("#area")[0].selectionEnd = 0;
 });
 var changeStyle = function(newstyle) {
@@ -220,7 +222,7 @@ if(!newfile) {
 			} else {
 				error(response.error);
 			}
-			setTimeout(resize, 10);
+			setTimeout(init, 10);
 		}).fail(function() {
 			error("Could not load snippet");
 		});
