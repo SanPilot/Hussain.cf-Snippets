@@ -40,7 +40,7 @@ if(isset($_GET['f']) && $_GET['f'] != "") {
 				</svg>
 				<iframe id="download-iframe"></iframe>
 				<select id="styleselect">
-					<option id="styledisabled" disabled selected>CHANGE STYLE</option>
+					<option id="styledisabled" disabled selected>STYLE</option>
 					<option value="default">Default</option>
 					<option value="agate">Agate</option>
 					<option value="androidstudio">Android Studio</option>
