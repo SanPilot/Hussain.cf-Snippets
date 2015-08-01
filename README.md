@@ -6,7 +6,7 @@ You can use it to share syntax-highlighted "Snippets" of code with others.
 ***Still a work in progress***.
 
 ##LICENCE
-All code, except code provided by [highlight.js](https://hightlightjs.org) is licensed under [MIT Licence](http://opensource.org/licenses/MIT):
+All code, except code provided by [highlight.js](https://highlightjs.org) is licensed under [MIT Licence](http://opensource.org/licenses/MIT):
 
 The MIT License (MIT)
 
