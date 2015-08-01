@@ -11,7 +11,7 @@ if(isset($_GET['info']) && $_GET["info"] != "" && isset($_GET['offset']) && $_GE
 		$lang = false;
 	}
 	$offset = $_GET['offset'] * 60;
-	$filemod = filemtime($file) + $offset;
+	$filemod = filemtime($file) - $offset;
 	$return = array(
 		"status" => false,
 		"error" => "",
