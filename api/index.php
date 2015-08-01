@@ -1,6 +1,7 @@
 <?php
 header("Content-type: text/json");
-if(isset($_GET['info']) && $_GET["info"] != "") {
+if(isset($_GET['info']) && $_GET["info"] != "" && isset($_GET['offset']) && $_GET['offset'] != "") {
+	date_default_timezone_set("UTC");
 	$file = "../files/".$_GET["info"];
 	$filename = htmlspecialchars($_GET["info"]);
 	$lang = preg_match("/.*\.(\w+)$/", $filename, $res);
@@ -9,6 +10,8 @@ if(isset($_GET['info']) && $_GET["info"] != "") {
 	} else {
 		$lang = false;
 	}
+	$offset = $_GET['offset'] * 60;
+	$filemod = filemtime($file) + $offset;
 	$return = array(
 		"status" => false,
 		"error" => "",
@@ -21,7 +24,7 @@ if(isset($_GET['info']) && $_GET["info"] != "") {
 	);
 	if(is_file($file)) {
 		$return['filename'] = $filename;
-		$return['modate'] = date("F j, Y", filemtime($file)) . " at " . date("g:i a", filemtime($file));
+		$return['modate'] = date("F j, Y", $filemod) . " at " . date("g:i a", $filemod);
 		$return['lang'] = $lang;
 		$return['linecount'] = count(file($file)) + 1;
 		if(filesize($file) <= 1048576) {
@@ -32,7 +35,7 @@ if(isset($_GET['info']) && $_GET["info"] != "") {
 					"status" => true,
 					"error" => "",
 					"filename" => $filename,
-					"modate" => date("F j, Y", filemtime($file)) . " at " . date("g:i a", filemtime($file)),
+					"modate" => date("F j, Y", $filemod) . " at " . date("g:i a", $filemod),
 					"lang" => $lang,
 					"linecount" => count(file($file)) + 1,
 					"content" => nl2br(htmlspecialchars(file_get_contents($file)), false),
