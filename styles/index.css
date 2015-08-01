@@ -31,9 +31,9 @@ body, html {
 #area {
 	margin: 0;
 	padding: 78px 18px 0px 0px;
-	font-size: 13px;
+	font-size: 13px !important;
 	outline: none;
-	font-family: monospace;
+	font-family: monospace !important;
 	resize: none;
 	border: none;
 	width: 100%;
