@@ -134,7 +134,7 @@ var parse = function(obj) {
 		document.title = obj.filename+" - Snippets";
 		$("#publink").attr("href", "../snippets/?fork="+encodeURIComponent(obj.filename));
 		writeHeader(obj.filename);
-		writeSecondary("modified "+obj.modate);
+		writeSecondary("saved "+obj.modate);
 		lines(obj.linecount);
 		populate(obj.content, obj.lang);
 		$("#areacontainer").css("display","initial");
