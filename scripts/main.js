@@ -1,5 +1,5 @@
 hljs.configure({useBR: true});
-var linecount, lineinterval, storeBool, pubObj, observe, changestyleinterval;
+var linecount, lineinterval, storeBool, pubObj, observe;
 var writeHeader = function(msg) {
 	$("#headerlarge").html(msg);
 };
@@ -188,12 +188,9 @@ $(document).ready(function() {
 var changeStyle = function(newstyle) {
 	Cookies.set("style", newstyle, {expires: 365});
 	$("link[rel='stylesheet']")[0].href = "styles/hljs-styles/"+newstyle+".css";
-	changestyleinterval = setInterval(function() {
+	setTimeout(function() {
 		$("body, html").css("background-color", $(".hljs").css("background-color"));
 	}, 1);
-	setTimeout(function() {
-		clearInterval(changestyleinterval);
-	}, 800);
 };
 var getParameterByName = function(name) {
 	name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
@@ -207,9 +204,11 @@ if(!newfile) {
 	}).fail(function() {
 		error("Could not load snippet");
 	});
-	if(Cookies.get("style") != undefined) {
-		changeStyle(Cookies.get("style"));
-	}
+	setTimeout(function() {
+		if(Cookies.get("style") != undefined) {
+			changeStyle(Cookies.get("style"));
+		}
+	}, 1);
 } else {
 	if(getParameterByName("fork") != "") {
 		$.ajax("api/?info="+getParameterByName("fork"), {timeout: 5000}).done(function(response) {
@@ -327,3 +326,6 @@ if(!newfile) {
 	}, 200);
 	$("#area").focus();
 }
+$("#styleselect").on("input", function() {
+	changeStyle($("#styleselect").val());
+});
