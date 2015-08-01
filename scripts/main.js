@@ -188,9 +188,8 @@ $(document).ready(function() {
 var changeStyle = function(newstyle) {
 	Cookies.set("style", newstyle, {expires: 365});
 	$("link[rel='stylesheet']")[0].href = "styles/hljs-styles/"+newstyle+".css";
-	$("body, html").css("background-color", $(".hljs").css("background-color"));
 	changestyleinterval = setInterval(function() {
-		$("body").css("background-color", $(".hljs").css("background-color"));
+		$("body, html").css("background-color", $(".hljs").css("background-color"));
 	}, 1);
 	setTimeout(function() {
 		clearInterval(changestyleinterval);
