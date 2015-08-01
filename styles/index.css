@@ -34,6 +34,7 @@ body, html {
 	font-size: 13px !important;
 	outline: none;
 	font-family: monospace !important;
+	line-height: 100% !important;
 	resize: none;
 	border: none;
 	width: 100%;
