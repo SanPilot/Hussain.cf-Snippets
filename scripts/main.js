@@ -214,7 +214,7 @@ if(!newfile) {
 	if(getParameterByName("fork") != "") {
 		$.ajax("api/?info="+getParameterByName("fork"), {timeout: 5000}).done(function(response) {
 			if(response.status) {
-				$("#headerlarge").html(response.filename + " - fork");
+				$("#headerlarge").html(response.filename.replace(/(.+)(\..*)/, "$1"+".fork"+"$2"));
 				$("#area").val(response.rawcontent);
 			} else {
 				error(response.error);
