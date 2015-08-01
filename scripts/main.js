@@ -214,7 +214,7 @@ if(!newfile) {
 	}, 1);
 } else {
 	if(getParameterByName("fork") != "") {
-		$.ajax("api/?info="+getParameterByName("fork"), {timeout: 5000}).done(function(response) {
+		$.ajax("api/?info="+getParameterByName("fork")+"&offset="+new Date().getTimezoneOffset(), {timeout: 5000}).done(function(response) {
 			if(response.status) {
 				$("#headerlarge").html(response.filename.replace(/(.+)(\..*)/, "$1"+".fork"+"$2"));
 				$("#area").val(response.rawcontent);
