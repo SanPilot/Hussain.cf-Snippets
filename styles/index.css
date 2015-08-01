@@ -160,6 +160,7 @@ body, html {
 	outline: none;
 	border: none;
 	font-family: serif;
+	width: 150px;
 }
 #styleselect > option {
 	font-family: serif;
