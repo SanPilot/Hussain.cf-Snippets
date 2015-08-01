@@ -163,23 +163,23 @@ else {
 		element.addEventListener(event, handler, false);
 	};
 }
+var text = $("#area")[0];
+var resize = function() {
+	text.style.height = 'auto';
+	text.style.height = text.scrollHeight - 78 +'px';
+};
+var delayedResize = function() {
+	setTimeout(resize, 0);
+};
+observe(text, 'change', resize);
+observe(text, 'cut', delayedResize);
+observe(text, 'paste', delayedResize);
+observe(text, 'drop', delayedResize);
+observe(text, 'keydown', delayedResize);
+text.focus();
+text.select();
+resize();
 $(document).ready(function() {
-	var text = $("#area")[0];
-	var resize = function() {
-		text.style.height = 'auto';
-		text.style.height = text.scrollHeight - 78 +'px';
-	};
-	var delayedResize = function() {
-		setTimeout(resize, 0);
-	};
-	observe(text, 'change', resize);
-	observe(text, 'cut', delayedResize);
-	observe(text, 'paste', delayedResize);
-	observe(text, 'drop', delayedResize);
-	observe(text, 'keydown', delayedResize);
-	text.focus();
-	text.select();
-	resize();
 	$("#area")[0].selectionStart = $("#area")[0].selectionEnd = 0;
 });
 var changeStyle = function(newstyle) {
