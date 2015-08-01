@@ -160,6 +160,13 @@ body, html {
 	border: none;
 	font-family: serif;
 	width: 150px;
+	transition: background-color 0.2s;
+}
+#styleselect:hover {
+	background-color: #ffffff;
+}
+#styleselect:active {
+	background-color: #434343;
 }
 #styleselect > option {
 	font-family: serif;
