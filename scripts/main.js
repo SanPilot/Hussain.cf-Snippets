@@ -1,5 +1,5 @@
 hljs.configure({useBR: true});
-var linecount, lineinterval, storeBool, pubObj, observe;
+var linecount, lineinterval, storeBool, pubObj, observe, changestyleinterval;
 var writeHeader = function(msg) {
 	$("#headerlarge").html(msg);
 };
@@ -188,9 +188,12 @@ $(document).ready(function() {
 var changeStyle = function(newstyle) {
 	Cookies.set("style", newstyle, {expires: 365});
 	$("link[rel='stylesheet']")[0].href = "styles/hljs-styles/"+newstyle+".css";
-	setTimeout(function() {
+	changestyleinterval = setInterval(function() {
 		$("body, html").css("background-color", $(".hljs").css("background-color"));
 	}, 1);
+	setTimeout(function() {
+		clearInterval(changestyleinterval);
+	}, 5000);
 };
 var getParameterByName = function(name) {
 	name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
