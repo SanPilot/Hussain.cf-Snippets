@@ -202,7 +202,7 @@ var getParameterByName = function(name) {
 	return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 if(!newfile) {
-	$.ajax("api/?info="+encodeURIComponent(filename), {timeout: 5000}).done(function(response) {
+	$.ajax("api/?info="+encodeURIComponent(filename)+"&offset="+new Date().getTimezoneOffset(), {timeout: 5000}).done(function(response) {
 		parse(response);
 	}).fail(function() {
 		error("Could not load snippet");
