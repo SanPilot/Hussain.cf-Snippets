@@ -231,6 +231,7 @@ if(!newfile) {
 		setTimeout(function() {
 			$("#headerlarge").html(getParameterByName("create")).css("font-style", "initial");
 			headermod = true;
+			$("#headermod").css("font-style", "initial");
 		}, 1);
 	}
 	$("#styleselect").css("display", "none");
