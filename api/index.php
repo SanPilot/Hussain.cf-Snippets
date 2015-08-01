@@ -54,28 +54,24 @@ if(isset($_POST['publish'], $_POST['content']) && $_POST['publish'] != "" && $_P
 		"status" => false,
 		"error" => "There was an error publishing the snippet"
 	);
-	if(!preg_match("[^/?*:;{}\\]+", $_POST['publish'])) {
-		if(strlen($filename) <= 40) {
-			if(strlen($filename) > 0) {
-				if(is_dir("../".$filename) || is_file("../".$filename) || is_file("../files/".$filename)) {
-					$return['error'] = "Name is already taken";
-				} else {
-					$save = file_put_contents("../files/".$filename, $_POST['content']);
-					if($save) {
-						$return = array(
-							"status" => true,
-							"error" => ""
-						);
-					}
-				}
+	if(strlen($filename) <= 40) {
+		if(strlen($filename) > 0) {
+			if(is_dir("../".$filename) || is_file("../".$filename) || is_file("../files/".$filename)) {
+				$return['error'] = "Name is already taken";
 			} else {
-				$return['error'] = "You must provide a name";
+				$save = file_put_contents("../files/".$filename, $_POST['content']);
+				if($save) {
+					$return = array(
+						"status" => true,
+						"error" => ""
+					);
+				}
 			}
 		} else {
-			$return['error'] = "Name is longer than 40 characters";
+			$return['error'] = "You must provide a name";
 		}
 	} else {
-		$return['error'] = "Name is invalid";
+		$return['error'] = "Name is longer than 40 characters";
 	}
 	echo json_encode($return);
 	exit();
