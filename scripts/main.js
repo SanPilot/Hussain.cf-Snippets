@@ -150,7 +150,7 @@ var parse = function(obj) {
 		error(obj.error, false);
 		$("#fork").html("CREATE THIS SNIPPET");
 		$("#publink").attr("href", "../snippets/?create="+encodeURIComponent(filename));
-		$("#changestyle").css("display", "none");
+		$("#styleselect").css("display", "none");
 	}
 };
 if (window.attachEvent) {
