@@ -163,7 +163,7 @@ else {
 		element.addEventListener(event, handler, false);
 	};
 }
-var init = function() {
+$(document).ready(function() {
 	var text = $("#area")[0];
 	var resize = function() {
 		text.style.height = 'auto';
@@ -180,9 +180,6 @@ var init = function() {
 	text.focus();
 	text.select();
 	resize();
-};
-$(document).ready(function() {
-	init();
 	$("#area")[0].selectionStart = $("#area")[0].selectionEnd = 0;
 });
 var changeStyle = function(newstyle) {
@@ -223,7 +220,7 @@ if(!newfile) {
 			} else {
 				error(response.error);
 			}
-			setTimeout(resize, 100);
+			setTimeout(resize, 10);
 		}).fail(function() {
 			error("Could not load snippet");
 		});
