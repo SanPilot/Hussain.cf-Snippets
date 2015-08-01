@@ -222,7 +222,10 @@ if(!newfile) {
 			} else {
 				error(response.error);
 			}
-			setTimeout(init, 10);
+			init();
+			setTimeout(function() {
+				$("#area")[0].selectionStart = $("#area")[0].selectionEnd = 0;
+			}, 1);
 		}).fail(function() {
 			error("Could not load snippet");
 		});
