@@ -199,7 +199,7 @@ var getParameterByName = function(name) {
 	var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
 		results = regex.exec(location.search);
 	return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-}
+};
 if(!newfile) {
 	$.ajax("api/?info="+encodeURIComponent(filename)+"&offset="+new Date().getTimezoneOffset(), {timeout: 5000}).done(function(response) {
 		parse(response);
