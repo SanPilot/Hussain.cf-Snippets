@@ -15,6 +15,7 @@ if(isset($_GET['f']) && $_GET['f'] != "") {
 		</title>
 		<link rel="stylesheet" href="styles/hljs-styles/obsidian.css">
 		<link rel="stylesheet" href="styles/index.css">
+		<link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
 		<style type="text/css">
 			<?php include "../scripts/php/clippings/fonts/PermianSerif.php" ?>
 		</style>
