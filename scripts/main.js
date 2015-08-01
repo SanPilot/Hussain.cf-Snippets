@@ -221,7 +221,7 @@ if(!newfile) {
 			} else {
 				error(response.error);
 			}
-			resize();
+			setTimeout(resize, 10);
 		}).fail(function() {
 			error("Could not load snippet");
 		});
