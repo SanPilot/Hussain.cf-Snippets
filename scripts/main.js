@@ -219,6 +219,11 @@ if(!newfile) {
 				$("#area").val(response.rawcontent);
 				headermod = true;
 				$("#headerlarge").css("font-style", "initial");
+				linecount = $("#area").val().split(/\r*\n/).length;
+				if(navigator.userAgent.indexOf("MSIE") != -1) {
+					linecount--;
+				}
+				lines(linecount);
 			} else {
 				error(response.error);
 			}
