@@ -15,6 +15,9 @@ var error = function(msg, dash) {
 	if(dash === undefined) {
 		dash = true;
 	}
+	if(msg == "") {
+		msg = "An error occured";
+	}
 	$("#ctext").css("color","#d13131").text(msg).html();
 	if(dash) {
 		$("#ctext").html("&nbsp–&nbsp"+$("#ctext").html());
