@@ -1,4 +1,5 @@
 RewriteEngine On
 RewriteRule ^snippets/download/(.*)/$ /snippets/api/?download=$1 [L]
 RewriteRule ^snippets/(.*)/$ /snippets/?f=$1 [L]
+RewriteRule ^snippets/\?f=(.*)/$ /snippets/$1 [R=301,L]
 Options -Indexes
