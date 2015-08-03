@@ -99,7 +99,9 @@ var cancel = function() {
 		store.remove("draft");
 		store.remove("name");
 	}
-	history.back();
+	setTimeout(function() {
+		history.back();
+	}, 1);
 };
 var publish = function() {
 	if($("#area").val() == "") {
@@ -121,7 +123,9 @@ var publish = function() {
 					store.remove("draft");
 					store.remove("name");
 				}
-				window.location = $("#headerlarge").html();
+				setTimeout(function() {
+					window.location = $("#headerlarge").html();
+				}, 1);
 			} else if(response != "") {
 				error(pubObj.error);
 			} else {
