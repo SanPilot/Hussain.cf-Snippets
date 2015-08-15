@@ -173,7 +173,7 @@ var init = function() {
 	var text = $("#area")[0];
 	var resize = function() {
 		text.style.height = 'auto';
-		text.style.height = text.scrollHeight - 78 +'px';
+		text.style.height = text.scrollHeight - 67 +'px';
 	};
 	var delayedResize = function() {
 		setTimeout(resize, 0);
